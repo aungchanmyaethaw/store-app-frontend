@@ -3,8 +3,9 @@ import { GET_SINGLE_PRODUCT } from "graphql/query";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
-import useStoreContext from "lib/context";
 import Image from "next/image";
+import ImageMagnifier from "components/ImageMagnifier";
+import useStoreContext from "lib/context";
 const ProductDetails = () => {
   const { query } = useRouter();
   const { productQty, increaseQty, decreaseQty, handleOnAdd } =
@@ -26,13 +27,21 @@ const ProductDetails = () => {
   const { title, description, image, slug } = product;
   return (
     <ProductDetailsStyled>
-      <Image
+      {/* <Image
         src={image.data.attributes.formats.medium.url}
         alt={title}
         width={image.data.attributes.formats.medium.width}
         height={image.data.attributes.formats.medium.height}
+      /> */}
+
+      <ImageMagnifier
+        src={image.data.attributes.formats.medium.url}
+        width={image.data.attributes.formats.medium.width}
+        height={image.data.attributes.formats.medium.height}
+        zoomLevel={1.5}
+        magnifieWidth={150}
+        magnifierHeight={150}
       />
-      {/* <img src={image.data.attributes.formats.medium.url} alt={title} /> */}
 
       <ProductInfo>
         <h2>{title}</h2>
@@ -65,6 +74,7 @@ const ProductDetailsStyled = styled.main`
   justify-content: space-between;
   align-items: center;
   margin: 5rem 0;
+  gap: 2em;
   img {
     width: 40%;
   }
